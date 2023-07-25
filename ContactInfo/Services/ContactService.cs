@@ -17,9 +17,26 @@ namespace ContactInfo.Services
 				(dbSettings.Value.ContactsCollectionName);
 		}
 
-		public async Task<IEnumerable<Contact>> GetAllAsync()
-		{
-			var contact = _ContactsCollectionName.Find(_=> true).ToListAsync();
-		}
+		//public async Task<IEnumerable<Contact>> GetAllAsync()
+		//{
+		//	var contact = _ContactsCollectionName.Find(_=> true).ToListAsync();
+
+		//}
+		public async Task<IEnumerable<Contact>> GetAllAsync()=>
+		
+			await _ContactsCollectionName.Find(_ => true).ToListAsync();
+
+		public async Task<Contact> GetByIdAsync(string id) =>
+			await _ContactsCollectionName.Find(a => a.Id == id).FirstOrDefaultAsync();
+	
+		public async Task CreateAsync(Contact contact)=>
+			await _ContactsCollectionName.InsertOneAsync(contact);
+
+		public async Task UpdateAsync(string id, Contact contact)=>
+			await _ContactsCollectionName.ReplaceOneAsync(a => a.Id == contact.Id, contact);
+	    
+		public async Task DeleteAsync(string id)=>
+			await _ContactsCollectionName.DeleteOneAsync(a =>a.Id == id);
+	    
 	}
 }
