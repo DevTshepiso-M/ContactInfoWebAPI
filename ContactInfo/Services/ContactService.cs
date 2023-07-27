@@ -7,14 +7,14 @@ namespace ContactInfo.Services
 	public class ContactService: IContactService
 	{
 		private readonly IMongoCollection<Contact> _ContactsCollectionName;
-		private readonly IOptions<DatabaseSettings> _dbSettings;
-		public ContactService(IOptions<DatabaseSettings> dbSettings)
+		private readonly IOptions<DatabaseSettings> _databaseSettings;
+		public ContactService(IOptions<DatabaseSettings> databaseSettings)
 		{
-			_dbSettings = dbSettings;
-			var mongoClient = new MongoClient(dbSettings.Value.ConnectionString);
-			var mongoDatabase = mongoClient.GetDatabase(dbSettings.Value.DatabaseName);
+			_databaseSettings = databaseSettings;
+			var mongoClient = new MongoClient(databaseSettings.Value.ConnectionString);
+			var mongoDatabase = mongoClient.GetDatabase(databaseSettings.Value.DatabaseName);
 			_ContactsCollectionName = mongoDatabase.GetCollection<Contact>
-				(dbSettings.Value.ContactsCollectionName);
+				(databaseSettings.Value.ContactsCollectionName);
 		}
 
 		//public async Task<IEnumerable<Contact>> GetAllAsync()

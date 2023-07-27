@@ -1,4 +1,5 @@
 using ContactInfo.Model;
+using ContactInfo.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<DatabaseSettings>(
 	builder.Configuration.GetSection("MyDBSettings"));
+
+builder.Services.AddTransient<IContactService, ContactService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
